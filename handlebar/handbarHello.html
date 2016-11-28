@@ -1,0 +1,113 @@
+
+  <!DOCTYPE html>  
+  <html>
+  <head>
+    <META http-equiv=Content-Type content="text/html; charset=utf-8">  
+    <title></title>
+  </head>
+  <body>
+    <!--基础html框架-->  
+   <div id='main-template' style="float: left;">
+     <div style="width: 450px; background-color: red;">
+       <div style="width: 100%; height: 100%">
+         <ul id='innerTemplate' style="padding: 0px;">
+           <!-- <li id='inner-item-template' style="background-color:#ddd;" class="test">
+              
+           </li> -->
+         </ul>
+       </div>
+     </div>
+   </div>
+   <div style="margin-left: 20px; background-color: #ddd; float: left;">
+     <button id='testButton'>换图</button>
+   </div>
+
+
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <script type="text/javascript" src="handlebars.min.js"></script>
+
+     
+    <script id="inner-template" type="text/x-handlebars-template">
+      {{#each commodity}}
+        <li style="background-color:{{background-color}}; display: inline-block; width: 32%; overflow: hidden;">
+              <img src="{{imgUrl}}" alt="">
+              <h5>{{title}}</h5>
+              <h5>{{fee}}元</h5>
+        </li>
+      {{/each}}
+    </script>
+
+    <!--进行数据处理、html构造-->  
+    <script type="text/javascript">
+      $(document).ready(function() {
+        //模拟的json对象
+        var data = {
+                    "commodity": [
+                        {
+                            "imgUrl": "http://sc.huanleguang.com/list/11814585/1.png",
+                            "fee": 100,
+                            "background-color": "#ddd",
+                            "title":"发法大师傅"
+                        },
+                        {
+                            "imgUrl": "http://sc.huanleguang.com/list/11814585/2.png",
+                            "fee": 150,
+                            "background-color": "#ffa",
+                            "title":"华国锋"
+                        },
+                        {
+                            "imgUrl": "http://sc.huanleguang.com/list/11814585/3.png",
+                            "fee": 24,
+                            "background-color": "#efa",
+                            "title":"ter"
+                        },
+                        {
+                            "imgUrl": "http://sc.huanleguang.com/list/11814585/4.png",
+                            "fee": 321,
+                            "background-color": "#faa",
+                            "title":"lgkj"
+                        },
+                        {
+                            "imgUrl": "http://sc.huanleguang.com/list/11814585/5.png",
+                            "fee": 213412,
+                            "background-color": "#432",
+                            "title":"大幅答复"
+                        },
+                        {
+                            "imgUrl": "http://sc.huanleguang.com/list/11814585/6.png",
+                            "fee": 2414,
+                            "background-color": "#ade",
+                            "title":"dsfa"
+                        }
+                    ]
+                };
+        
+        //注册一个Handlebars模版，通过id找到某一个模版，获取模版的html框架
+        //$("#table-template").html()是jquery的语法，不懂的童鞋请恶补。。。
+        var myTemplate = Handlebars.compile($("#inner-template").html());
+        
+       /* //注册一个比较数字大小的Helper,有options参数，块级Helper
+        Handlebars.registerHelper("compare",function(v1,v2,options){
+          //判断v1是否比v2大
+          if(v1>v2){
+            //继续执行
+            return options.fn(this);
+          }else{
+            //执行else部分
+            return options.inverse(this);
+          }
+        });*/
+        
+        //将json对象用刚刚注册的Handlebars模版封装，得到最终的html，插入到页面中。
+        $('#innerTemplate').html(myTemplate(data));
+
+
+        $('#testButton').click(function() {
+          data.commodity = data.commodity.reverse();
+          $('#innerTemplate').html(myTemplate(data));
+        });
+      });
+    </script>
+
+  </body>
+  </html>
