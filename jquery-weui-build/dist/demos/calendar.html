@@ -84,7 +84,17 @@
         }
       });
       $("#date3").calendar({
-        container: "#inline-calendar"
+        container: "#inline-calendar",
+        value:["2017-1-12","2017-1-18","2017-1-22","2017-1-25"],
+        onChange: function (p, values, displayValues) {
+          console.log(values, displayValues);
+        },
+        onDayClick: function (p, values, displayValues) {
+          console.log(values, displayValues);
+        },
+        onMonthAdd: function (p, values, displayValues) {
+          console.log(values, displayValues);
+        }
       });
     </script>
   </body>
